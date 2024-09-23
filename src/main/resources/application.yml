@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: wsm
+  profiles:
+    active: dev
+
+springdoc:
+  api-docs:
+    enabled: true

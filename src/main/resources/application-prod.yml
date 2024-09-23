@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wsm
+    username: postgres
+    password: postgres
+    driver-class-name: 'org.postgresql.Driver'
