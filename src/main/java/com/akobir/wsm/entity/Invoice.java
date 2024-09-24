@@ -15,11 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 public class Invoice extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "org_id", nullable = false)
     private Organization organization;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
@@ -30,14 +30,14 @@ public class Invoice extends BaseEntity {
     @Column(name = "status", nullable = false)
     private InvoiceStatus status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
 
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY)
     private List<IncomingProduct> incomingProducts;
 
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY)
     private List<OutgoingProduct> outgoingProducts;
 }
 

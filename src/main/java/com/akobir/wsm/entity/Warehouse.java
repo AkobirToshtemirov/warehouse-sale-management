@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Warehouse extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "org_id", nullable = false)
     private Organization organization;
 
