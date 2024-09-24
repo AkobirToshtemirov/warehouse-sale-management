@@ -51,14 +51,14 @@ public class ProductServiceImpl implements ProductService {
     public RemainingProductByDateResponse getRemainingProductsByOrganizationBetweenDates(UUID orgId, LocalDate startDate, LocalDate endDate) {
         organizationService.getOrganizationById(orgId);
         Integer quantity = productRepository.getRemainingProductsByOrganizationBetweenDates(orgId, startDate, endDate);
-        return remainingProductsMapper.toDateResponse(startDate.atStartOfDay(), endDate.atTime(23, 59, 59), quantity);
+        return remainingProductsMapper.toDateResponse(startDate, endDate, quantity);
     }
 
     @Override
     public RemainingProductByDateResponse getRemainingProductsByWarehouseBetweenDates(UUID warehouseId, LocalDate startDate, LocalDate endDate) {
         warehouseService.getWarehouseById(warehouseId);
         Integer quantity = productRepository.getRemainingProductsByWarehouseBetweenDates(warehouseId, startDate, endDate);
-        return remainingProductsMapper.toDateResponse(startDate.atStartOfDay(), endDate.atTime(23, 59, 59), quantity);
+        return remainingProductsMapper.toDateResponse(startDate, endDate, quantity);
     }
 
     @Override

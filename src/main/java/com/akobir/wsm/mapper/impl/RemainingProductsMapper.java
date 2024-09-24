@@ -8,7 +8,7 @@ import com.akobir.wsm.entity.Warehouse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor
@@ -25,9 +25,8 @@ public class RemainingProductsMapper {
         return new RemainingProductByWarehouseResponse(warehouseMapper.mapToPreview(warehouse), quantity);
     }
 
-    public RemainingProductByDateResponse toDateResponse(LocalDateTime startDate, LocalDateTime endDate, Integer quantity) {
+    public RemainingProductByDateResponse toDateResponse(LocalDate startDate, LocalDate endDate, Integer quantity) {
         return new RemainingProductByDateResponse(startDate, endDate, quantity);
     }
-
 
 }
