@@ -20,6 +20,10 @@ public class User extends BaseEntity {
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 
+    @OneToOne
+    @JoinColumn(name = "attachment_id", unique = true)
+    private Attachment attachment;
+
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 

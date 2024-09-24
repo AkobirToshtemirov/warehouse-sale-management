@@ -7,10 +7,15 @@ import com.akobir.wsm.dto.request.UserRequest;
 import com.akobir.wsm.dto.response.UserResponse;
 import com.akobir.wsm.entity.User;
 import com.akobir.wsm.mapper.Mapper;
+import com.akobir.wsm.service.AttachmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapper implements Mapper<User, UserRequest, UserResponse, UserPreview> {
+
+    private final AttachmentService attachmentService;
 
     @Override
     public User mapToEntity(UserRequest userRequest) {
@@ -61,7 +66,8 @@ public class UserMapper implements Mapper<User, UserRequest, UserResponse, UserP
                 warehousePreview,
                 user.isDeleted(),
                 user.getCreatedAt(),
-                user.getUpdatedAt()
+                user.getUpdatedAt(),
+                attachmentService.toResponse(user.getAttachment())
         );
     }
 }
