@@ -5,12 +5,20 @@ import com.akobir.wsm.dto.preview.UserPreview;
 import com.akobir.wsm.dto.preview.WarehousePreview;
 import com.akobir.wsm.dto.request.UserRequest;
 import com.akobir.wsm.dto.response.UserResponse;
+import com.akobir.wsm.entity.Attachment;
 import com.akobir.wsm.entity.User;
 import com.akobir.wsm.mapper.Mapper;
+import com.akobir.wsm.service.AttachmentService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapper implements Mapper<User, UserRequest, UserResponse, UserPreview> {
+
+    private final AttachmentService attachmentService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User mapToEntity(UserRequest userRequest) {
@@ -18,7 +26,7 @@ public class UserMapper implements Mapper<User, UserRequest, UserResponse, UserP
 
         User user = new User();
         user.setUsername(userRequest.username());
-        user.setPassword(userRequest.password());
+        user.setPassword(passwordEncoder.encode(userRequest.password()));
         user.setEmail(userRequest.email());
         user.setMainPhoto(userRequest.mainPhoto());
         return user;
@@ -52,6 +60,7 @@ public class UserMapper implements Mapper<User, UserRequest, UserResponse, UserP
             );
         }
 
+        Attachment attachment = user.getAttachment();
         return new UserResponse(
                 user.getId(),
                 user.getUsername(),
@@ -61,7 +70,8 @@ public class UserMapper implements Mapper<User, UserRequest, UserResponse, UserP
                 warehousePreview,
                 user.isDeleted(),
                 user.getCreatedAt(),
-                user.getUpdatedAt()
+                user.getUpdatedAt(),
+                attachment == null ? null : attachmentService.toResponse(attachment)
         );
     }
 }

@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new CustomNotFoundException("User not found with username: " + username));
+    }
+
+    @Override
     @Cacheable(value = "userCache", key = "'allUserPreviews'")
     public List<UserPreview> getAllPreviews() {
         return userRepository.findAll()

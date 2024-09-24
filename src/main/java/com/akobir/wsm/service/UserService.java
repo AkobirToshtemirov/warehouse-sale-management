@@ -12,4 +12,6 @@ public interface UserService extends BaseService<User, UUID, UserRequest, UserRe
     UserResponse getCachedUserByUsername(String username);
 
     List<UserPreview> getAllByOrganization(UUID orgId);
+
+    User getByUsername(String username);
 }

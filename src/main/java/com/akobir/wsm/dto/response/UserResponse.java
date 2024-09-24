@@ -15,6 +15,7 @@ public record UserResponse(
         WarehousePreview warehouse,
         boolean isDeleted,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+        AttachmentResponse attachment
 ) {
 }

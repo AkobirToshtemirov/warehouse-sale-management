@@ -16,8 +16,7 @@ import java.util.*;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex, HttpServletRequest request) {
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpServletRequest request) {
         Map<String, List<String>> errorBody = new HashMap<>();
 
         for (FieldError fieldError : ex.getFieldErrors()) {
@@ -35,9 +34,18 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(CustomNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFoundException(
-            CustomNotFoundException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleNotFoundException(CustomNotFoundException ex, WebRequest request) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), request.getDescription(false));
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidToken(InvalidTokenException ex, WebRequest request) {
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(), request.getDescription(false));
+    }
+
+    @ExceptionHandler(AuthenticationFailedException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationFailed(AuthenticationFailedException ex, WebRequest request) {
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(), request.getDescription(false));
     }
 
     private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, Object errorBody, String errorPath) {
