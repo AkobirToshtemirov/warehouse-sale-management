@@ -33,15 +33,19 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse authenticate(AuthRequest request) {
+        System.out.println("Authenticating user: " + request.username());
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.username(), request.password())
             );
+            System.out.println("Authenticated user is done: " + request.username());
         } catch (BadCredentialsException e) {
+            System.out.println("Invalid username or password for user: " + request.username());
             throw new AuthenticationFailedException("Invalid username or password.");
         }
 
         User user = userService.getByUsername(request.username());
+        System.out.println("User authenticated: " + user.getUsername());
         String accessToken = jwtService.generateAccessToken(new CustomUserDetails(user));
         String refreshToken = jwtService.generateRefreshToken(new CustomUserDetails(user));
 

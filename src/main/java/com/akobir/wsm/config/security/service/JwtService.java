@@ -20,7 +20,7 @@ public class JwtService {
     private static final String key = "eyJhbGciOiJIUzUxMiJ9eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcwNDQ2ODA4MCwiaWF0IjoxNzA0NDY4MDgwfQLtk5Evxt";
 
     public String generateAccessToken(UserDetails userDetails) {
-        long accessTokenExpiration = 1000 * 60 * 60 * 24 * 7; // 1 week
+        long accessTokenExpiration = 1000 * 60 * 60 * 24 * 7;
         return buildToken(new HashMap<>(), userDetails, accessTokenExpiration);
     }
 
