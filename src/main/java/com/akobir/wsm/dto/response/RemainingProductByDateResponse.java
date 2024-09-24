@@ -1,10 +1,10 @@
 package com.akobir.wsm.dto.response;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record RemainingProductByDateResponse(
-        LocalDateTime startDate,
-        LocalDateTime endDate,
+        LocalDate startDate,
+        LocalDate endDate,
         Integer quantity
 ) {
 }

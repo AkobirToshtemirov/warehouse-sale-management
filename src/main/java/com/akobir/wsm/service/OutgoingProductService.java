@@ -9,5 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface OutgoingProductService extends BaseService<OutgoingProduct, UUID, OutgoingProductRequest, OutgoingProductResponse, OutgoingProductPreview> {
+    List<OutgoingProductPreview> getOutgoingProductsByInvoiceId(UUID invoiceId);
+
     List<OutgoingProductPreview> getAllByOrganization(UUID orgId);
 }

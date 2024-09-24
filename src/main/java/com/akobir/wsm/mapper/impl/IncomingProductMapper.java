@@ -1,12 +1,11 @@
 package com.akobir.wsm.mapper.impl;
 
 import com.akobir.wsm.dto.preview.IncomingProductPreview;
+import com.akobir.wsm.dto.preview.InvoicePreview;
 import com.akobir.wsm.dto.request.IncomingProductRequest;
 import com.akobir.wsm.dto.response.IncomingProductResponse;
 import com.akobir.wsm.entity.IncomingProduct;
 import com.akobir.wsm.entity.Invoice;
-import com.akobir.wsm.entity.Organization;
-import com.akobir.wsm.entity.Product;
 import com.akobir.wsm.mapper.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,25 +16,12 @@ public class IncomingProductMapper implements Mapper<IncomingProduct, IncomingPr
 
     private final OrganizationMapper organizationMapper;
     private final ProductMapper productMapper;
-    private final InvoiceMapper invoiceMapper;
 
     @Override
     public IncomingProduct mapToEntity(IncomingProductRequest request) {
         if (request == null) return null;
 
         IncomingProduct incomingProduct = new IncomingProduct();
-        Organization organization = new Organization(); // Fetch from service/repository
-        organization.setId(request.orgId());
-
-        Invoice invoice = new Invoice(); // Fetch from service/repository
-        invoice.setId(request.invoiceId());
-
-        Product product = new Product(); // Fetch from service/repository
-        product.setId(request.productId());
-
-        incomingProduct.setOrganization(organization);
-        incomingProduct.setInvoice(invoice);
-        incomingProduct.setProduct(product);
         incomingProduct.setNum(request.num());
         incomingProduct.setAmount(request.amount());
         incomingProduct.setPrice(request.price());
@@ -59,6 +45,7 @@ public class IncomingProductMapper implements Mapper<IncomingProduct, IncomingPr
     public IncomingProductResponse mapToResponse(IncomingProduct incomingProduct) {
         if (incomingProduct == null) return null;
 
+        Invoice invoice = incomingProduct.getInvoice();
         return new IncomingProductResponse(
                 incomingProduct.getId(),
                 incomingProduct.getNum(),
@@ -66,7 +53,7 @@ public class IncomingProductMapper implements Mapper<IncomingProduct, IncomingPr
                 incomingProduct.getPrice(),
                 incomingProduct.getTotal(),
                 productMapper.mapToPreview(incomingProduct.getProduct()),
-                invoiceMapper.mapToPreview(incomingProduct.getInvoice()),
+                new InvoicePreview(invoice.getId(), incomingProduct.getNum(), invoice.getStatus().name()),
                 organizationMapper.mapToPreview(incomingProduct.getOrganization()),
                 incomingProduct.isDeleted(),
                 incomingProduct.getCreatedAt(),
