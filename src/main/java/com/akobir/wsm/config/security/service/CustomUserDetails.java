@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-
 public record CustomUserDetails(User user) implements UserDetails {
 
     @Override
@@ -32,6 +31,6 @@ public record CustomUserDetails(User user) implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isDeleted();
+        return !user.isDeleted();
     }
 }
